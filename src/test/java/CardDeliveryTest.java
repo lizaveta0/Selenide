@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selenide.open;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeliveryTest {
 
@@ -27,9 +26,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String successMessage = cardPage.getOrderSuccessMessage();
-
-        assertEquals("Встреча успешно забронирована на " + date, successMessage);
+        cardPage.checkOrderSuccessMessage("Встреча успешно забронирована на " + date);
     }
 
     @Test
@@ -41,8 +38,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String successMessage = cardPage.getOrderSuccessMessage();
-        assertEquals("Встреча успешно забронирована на " + date, successMessage);
+        cardPage.checkOrderSuccessMessage("Встреча успешно забронирована на " + date);
     }
 
     @Test
@@ -150,7 +146,6 @@ public class CardDeliveryTest {
         Boolean accept = false;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        Boolean agreemented = cardPage.agreementIsValid();
-        assertEquals(accept, agreemented);
+        cardPage.agreementIsInvalid();
     }
 }

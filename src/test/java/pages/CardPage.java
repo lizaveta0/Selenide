@@ -4,9 +4,9 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selenide.*;
 import java.time.Duration;
-
-import static com.codeborne.selenide.Selenide.$;
 
 public class CardPage {
 
@@ -23,6 +23,7 @@ public class CardPage {
     private SelenideElement inputPhoneError = $(By.xpath("//*[@data-test-id='phone' and contains(@class, 'input_invalid')]//span[@class='input__sub']"));
 
     private SelenideElement agreemetCheck = $("[data-test-id='agreement'] span.checkbox__box");
+    private SelenideElement agreemetText = $("[data-test-id='agreement']");
     private SelenideElement submitButton = $(".button");
     private SelenideElement message = $("[data-test-id='notification'] div.notification__content");
 
@@ -48,27 +49,27 @@ public class CardPage {
         submitButton.click();
     }
 
-    public String getOrderSuccessMessage() {
-        return message.shouldBe(Condition.visible, Duration.ofSeconds(15)).getText();
+    public void checkOrderSuccessMessage(String message) {
+         this.message.should(visible, Duration.ofSeconds(15)).shouldBe(text(message));
     }
 
     public void checkErrorMessageForCity(String error) {
-        inputCityError.shouldBe(Condition.visible, Condition.text(error));
+        inputCityError.shouldBe(visible, text(error));
     }
 
     public void checkErrorMessageForDate(String error) {
-        inputDateError.shouldBe(Condition.visible, Condition.text(error));
+        inputDateError.shouldBe(visible, text(error));
     }
 
     public void checkErrorMessageForName(String error) {
-        inputNameError.shouldBe(Condition.visible, Condition.text(error));
+        inputNameError.shouldBe(visible, text(error));
     }
 
     public void checkErrorMessageForPhone(String error) {
-        inputPhoneError.shouldBe(Condition.visible, Condition.text(error));
+        inputPhoneError.shouldBe(visible, text(error));
     }
 
-    public boolean agreementIsValid() {
-        return agreemetCheck.getAttribute("class").contains("input_invalid");
+    public void agreementIsInvalid() {
+        agreemetText.shouldHave(visible);
     }
 }
