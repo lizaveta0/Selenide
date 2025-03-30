@@ -52,20 +52,20 @@ public class CardPage {
         return message.shouldBe(Condition.visible, Duration.ofSeconds(15)).getText();
     }
 
-    public String getErrorMessageForCity() {
-        return inputCityError.shouldBe(Condition.visible).getText();
+    public void checkErrorMessageForCity(String error) {
+        inputCityError.shouldBe(Condition.visible, Condition.text(error));
     }
 
-    public String getErrorMessageForDate() {
-        return inputDateError.shouldBe(Condition.visible).getText();
+    public void checkErrorMessageForDate(String error) {
+        inputDateError.shouldBe(Condition.visible, Condition.text(error));
     }
 
-    public String getErrorMessageForName() {
-        return inputNameError.shouldBe(Condition.visible).getText();
+    public void checkErrorMessageForName(String error) {
+        inputNameError.shouldBe(Condition.visible, Condition.text(error));
     }
 
-    public String getErrorMessageForPhone() {
-        return inputPhoneError.shouldBe(Condition.visible).getText();
+    public void checkErrorMessageForPhone(String error) {
+        inputPhoneError.shouldBe(Condition.visible, Condition.text(error));
     }
 
     public boolean agreementIsValid() {

@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.CardPage;
@@ -6,7 +5,6 @@ import pages.CardPage;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,7 +42,6 @@ public class CardDeliveryTest {
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
         String successMessage = cardPage.getOrderSuccessMessage();
-
         assertEquals("Встреча успешно забронирована на " + date, successMessage);
     }
 
@@ -57,9 +54,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForCity();
-
-        assertEquals("Поле обязательно для заполнения", error);
+        cardPage.checkErrorMessageForCity("Поле обязательно для заполнения");
     }
 
     @Test
@@ -71,9 +66,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForCity();
-
-        assertEquals("Доставка в выбранный город недоступна", error);
+        cardPage.checkErrorMessageForCity("Доставка в выбранный город недоступна");
     }
 
     @Test
@@ -85,9 +78,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForDate();
-
-        assertEquals("Неверно введена дата", error);
+        cardPage.checkErrorMessageForDate("Неверно введена дата");
     }
 
     @Test
@@ -99,9 +90,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForDate();
-
-        assertEquals("Неверно введена дата", error);
+        cardPage.checkErrorMessageForDate("Неверно введена дата");
     }
 
     @Test
@@ -113,9 +102,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForName();
-
-        assertEquals("Поле обязательно для заполнения", error);
+        cardPage.checkErrorMessageForName("Поле обязательно для заполнения");
     }
 
     @Test
@@ -127,9 +114,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForName();
-
-        assertEquals("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.", error);
+        cardPage.checkErrorMessageForName("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы.");
     }
 
     @Test
@@ -141,9 +126,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForPhone();
-
-        assertEquals("Поле обязательно для заполнения", error);
+        cardPage.checkErrorMessageForPhone("Поле обязательно для заполнения");
     }
 
     @Test
@@ -155,9 +138,7 @@ public class CardDeliveryTest {
         Boolean accept = true;
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
-        String error = cardPage.getErrorMessageForPhone();
-
-        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", error);
+        cardPage.checkErrorMessageForPhone("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.");
     }
 
     @Test
@@ -170,12 +151,6 @@ public class CardDeliveryTest {
 
         cardPage.fillOrderForm(city, date, name, phone, accept);
         Boolean agreemented = cardPage.agreementIsValid();
-
         assertEquals(accept, agreemented);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        closeWebDriver();
     }
 }
